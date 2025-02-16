@@ -38,8 +38,11 @@ const nextConfig = {
       oracledb: false,
     };
 
-
     return config;
+  },
+  // Add this section for the port configuration
+  serverRuntimeConfig: {
+    PORT: process.env.PORT || 3200
   },
 };
 

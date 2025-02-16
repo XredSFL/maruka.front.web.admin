@@ -20,7 +20,7 @@ ADD https://github.com/vishnubob/wait-for-it/raw/master/wait-for-it.sh /usr/wait
 RUN chmod +x /usr/wait-for-it.sh
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 3200
 
 # Define the command to run the app
 CMD ["/bin/bash", "-c", "/usr/wait-for-it.sh db:3306 -- npm start"]
