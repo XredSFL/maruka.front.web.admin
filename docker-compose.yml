@@ -5,7 +5,7 @@ services:
     ports:
       - "3200:3200"
     environment:
-      - DB_HOST=host.docker.internal
+      - DB_HOST=34.87.52.9:3306
       - DB_USER=marukaco_root
       - DB_PASSWORD=ncaiev9uqhaichjreihvnvijuavwjnvjo
       - DB_NAME=marukaco_maruka_db
