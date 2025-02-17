@@ -53,7 +53,7 @@ function CustomModal({ companyData, onClose }) {
               
                 {companyData.companies.map((company, index) => {
                   return(
-                    <>
+                    <div key={index}>
                         <div className="flex flex-row">
                           <label className="font-medium text-xl text-black mb-1">
                             Company : &nbsp;
@@ -69,7 +69,7 @@ function CustomModal({ companyData, onClose }) {
                             </p>
                           </div>
                         </div>
-                    </>
+                    </div>
                   )
                 })}
               </div>
@@ -394,6 +394,17 @@ function GlobalNetworkForm({ onCancel, onSuccess }) {
         group: "",
         companies: [{ companyName: "", address: "", phone: "", fax: "" }]
     });
+
+    const regionCountries = {
+      'East Asia': ['China', 'Japan', 'South Korea', 'Taiwan', 'Hong Kong', 'Macau', 'Mongolia', 'North Korea'],
+      'South Asia': ['India', 'Pakistan', 'Bangladesh', 'Sri Lanka', 'Nepal', 'Bhutan', 'Maldives', 'Afghanistan'],
+      'Southeast Asia': ['Indonesia', 'Malaysia', 'Philippines', 'Singapore', 'Thailand', 'Vietnam', 'Myanmar', 'Cambodia', 'Laos', 'Brunei', 'Timor-Leste'],
+      // 'Europe': ['United Kingdom', 'Germany', 'France', 'Italy', 'Spain', 'Netherlands', 'Belgium', 'Sweden', 'Poland', 'Norway', 'Denmark', 'Finland', 'Switzerland', 'Austria', 'Greece', 'Portugal', 'Ireland', 'Czech Republic', 'Romania', 'Hungary'],
+      // 'North America': ['United States', 'Canada', 'Mexico'],
+      // 'South America': ['Brazil', 'Argentina', 'Colombia', 'Peru', 'Chile', 'Venezuela', 'Ecuador', 'Bolivia', 'Paraguay', 'Uruguay', 'Guyana', 'Suriname'],
+      // 'Africa': ['Nigeria', 'Egypt', 'South Africa', 'Kenya', 'Ethiopia', 'Ghana', 'Ivory Coast', 'Tanzania', 'Morocco', 'Algeria', 'Tunisia', 'Senegal', 'Uganda', 'Cameroon', 'Zimbabwe', 'Rwanda', 'Zambia'],
+      'Oceania': ['Australia', 'New Zealand', 'Papua New Guinea', 'Fiji', 'Solomon Islands', 'Vanuatu', 'Samoa', 'Tonga', 'Palau', 'Micronesia']
+    };
     const [isLoading, setIsLoading] = useState(true);
     const [groupCompanies, setGroupCompanies] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -415,20 +426,24 @@ function GlobalNetworkForm({ onCancel, onSuccess }) {
     };
 
     const handleInputChange = useCallback((e, index = null) => {
-        const { name, value } = e.target;
-        setFormData(prev => {
+      const { name, value } = e.target;
+      setFormData(prev => {
           if (index !== null) {
-            return {
-              ...prev,
-              companies: prev.companies.map((company, i) => 
-                i === index ? { ...company, [name]: value } : company
-              )
-            };
+              return {
+                  ...prev,
+                  companies: prev.companies.map((company, i) => 
+                      i === index ? { ...company, [name]: value } : company
+                  )
+              };
           } else {
-            return { ...prev, [name]: value };
+              if (name === 'region') {
+                  // Reset country when region changes
+                  return { ...prev, [name]: value, country: '' };
+              }
+              return { ...prev, [name]: value };
           }
-        });
-      }, []);
+      });
+  }, []);
 
       const handleAddCompany = useCallback(() => {
         setFormData(prev => ({
@@ -516,12 +531,6 @@ function GlobalNetworkForm({ onCancel, onSuccess }) {
                             </option>
                         ))}
                     </select>
-                    <img
-                        loading="lazy"
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/4b442b52c0acadd138b63823c9dcce00327c8c8dcd59fb79a5447950ef89fc11?placeholderIfAbsent=true&apiKey=d0f9034d0dc44b1aab58ff0a1da9e3b1"
-                        alt="Select arrow"
-                        className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
-                    />
                 </div>
             </div>
         </div>
@@ -590,21 +599,23 @@ function GlobalNetworkForm({ onCancel, onSuccess }) {
                             onChange={handleInputChange}
                         />
                         <SelectField 
-                            label="Region" 
-                            name="region" 
-                            placeholder="Select region" 
-                            options={['East Asia', 'South Asia', 'Europe', 'North America', 'South America', 'Africa', 'Oceania']}
-                            formData={formData}
-                            onChange={handleInputChange}
-                        />
-                        <SelectField 
-                            label="Country" 
-                            name="country" 
-                            placeholder="Select country" 
-                            options={['Indonesia', 'Malaysia']}
-                            formData={formData}
-                            onChange={handleInputChange}
-                        />
+                          label="Region" 
+                          name="region" 
+                          placeholder="Select region" 
+                          options={Object.keys(regionCountries)}
+                          formData={formData}
+                          onChange={handleInputChange}
+                      />
+
+                      <SelectField 
+                          label="Country" 
+                          name="country" 
+                          placeholder="Select country" 
+                          options={formData.region ? regionCountries[formData.region] : []}
+                          formData={formData}
+                          onChange={handleInputChange}
+                          disabled={!formData.region}
+                      />
                         <SelectField 
                             label="Group-company" 
                             name="group" 

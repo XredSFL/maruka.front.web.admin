@@ -5,17 +5,10 @@ services:
     ports:
       - "3200:3200"
     environment:
-      - DB_HOST=db
+      - DB_HOST=host.docker.internal
       - DB_USER=marukaco_root
       - DB_PASSWORD=ncaiev9uqhaichjreihvnvijuavwjnvjo
       - DB_NAME=marukaco_maruka_db
-      - PORT=3200  # Add this line to set the port environment variable
-    depends_on:
-      - db
-  db:
-    image: mysql:5.7
-    environment:
-      - MYSQL_ROOT_PASSWORD=ncaiev9uqhaichjreihvnvijuavwjnvjo
-      - MYSQL_DATABASE=marukaco_maruka_db
-    volumes:
-      - ./mysql-data:/var/lib/mysql
+      - PORT=3200
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

@@ -54,23 +54,32 @@ export async function POST(req) {
     const data = await req.json();
     const { continent, region, country, group, companies } = data;
 
-    // Simpan data ke database
-    await Promise.all(companies.map(company => 
-      knex('global_networks').insert({
-        continent,
+    // Start a transaction
+    await knex.transaction(async (trx) => {
+      // 1. Insert into global_networks table
+      const [globalNetworkId] = await trx('global_networks').insert({
+        continent: continent || '', // Ensure it's not null
         region,
         country,
-        group,
+        group_company_id: group,
+        // address is not provided in the data, so we'll skip it
+      });
+
+      // 2. Insert companies
+      const companyInserts = companies.map(company => ({
         company_name: company.companyName,
         address: company.address,
         phone: company.phone,
-        fax: company.fax
-      })
-    ));
+        fax: company.fax,
+        global_network_id: globalNetworkId
+      }));
 
-    return NextResponse.json({ message: 'Global network data saved successfully' });
+      await trx('companies').insert(companyInserts);
+    });
+
+    return NextResponse.json({ message: 'Data saved successfully' });
   } catch (error) {
-    console.error('Error saving global network data:', error);
-    return NextResponse.json({ error: 'Failed to save global network data' }, { status: 500 });
+    console.error('Error saving data:', error);
+    return NextResponse.json({ error: 'Failed to save data' }, { status: 500 });
   }
 }
