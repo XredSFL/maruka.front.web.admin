@@ -58,3 +58,17 @@ export async function PUT(request, { params }) {
     return NextResponse.json({ error: 'Failed to update news' }, { status: 500 });
   }
 }
+
+export async function DELETE(request, { params }) {
+  const { id } = params;
+
+  try {
+    // Delete the news from the database
+    await knex('news').where({ id }).del();
+    
+    return NextResponse.json({ message: 'News deleted successfully' }, { status: 200 });    
+  } catch (error) {
+    console.error('Error deleting news:', error);
+    return NextResponse.json({ error: 'Failed to delete news' }, { status: 500 });    
+  }
+}

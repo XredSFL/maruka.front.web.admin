@@ -431,7 +431,7 @@ function EditNewsModal({ onClose, onSave, item }) {
     const handleDelete = useCallback(async (item) => {
       if (window.confirm(`Are you sure you want to delete ${item.name}?`)) {
         try {
-          const response = await fetch(`/api/group-companies/${item.id}`, {
+          const response = await fetch(`/api/news/${item.id}`, {
             method: 'DELETE',
           });
           if (response.ok) {

@@ -109,7 +109,7 @@ function AddGroupCompanyModal({ onClose, onSave }) {
                   Link Map (*)
                 </label>
                 <input
-                  type="url"
+                  type="text"
                   id="linkMap"
                   name="linkMap"
                   value={formData.linkMap}
@@ -522,7 +522,7 @@ function EditGroupCompanyModal({ onClose, onSave, item }) {
           <p style={{color:'#357049'}}>{item.company_name}</p>
         </div>
         <div className="flex-1 shrink px-3 py-4 h-full text-sm tracking-normal whitespace-nowrap min-w-[240px]" onClick={() => setIsModalOpen(true)}>
-        <p style={{color:'#357049'}}>{item.address}</p>
+        <p style={{color:'#357049'}}>{item.address.slice(0, 20)}</p>
         </div>
         <div className="flex-1 shrink px-3 py-4 h-full text-sm tracking-normal whitespace-nowrap min-w-[240px]" onClick={() => setIsModalOpen(true)}>
           {item.photo ? (

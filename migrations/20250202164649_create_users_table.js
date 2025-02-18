@@ -6,6 +6,7 @@ exports.up = function(knex) {
       table.string('name');
       table.string('phone', 20);
       table.string('email', 50).unique();
+      table.string('password');
       table.string('country', 100);
       table.enu('status', ['active', 'inactive']).defaultTo('active');
       table.timestamps(true, true);

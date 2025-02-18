@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 function CustomModal({ companyData, onClose }) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" key={companyData.id}>
         <div className="flex overflow-hidden flex-col justify-center max-w-2xl bg-white rounded-3xl p-8" role="dialog" aria-labelledby="modalTitle">
           <div className="flex flex-col items-center self-center pb-8 w-full max-md:max-w-full">
             <div className="flex overflow-hidden flex-col pt-6 w-full text-3xl font-bold tracking-tight bg-white text-neutral-950 max-md:max-w-full">
@@ -161,7 +161,7 @@ const CompanyForm = React.memo(({ company, index, onChange }) => {
 function TableRow({ id, companyContinent, companyRegion, companies, groupCompanyName }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     return (
-      <div className="flex flex-wrap w-full bg-white border-b border-solid border-b-zinc-100  min-h-[70px] w-full">
+      <div className="flex flex-wrap w-full bg-white border-b border-solid border-b-zinc-100  min-h-[70px] w-full" key={id}>
         <div className="flex-1 shrink px-3 py-4 h-full text-sm tracking-normal whitespace-nowrap min-w-[240px]" onClick={() => setIsModalOpen(true)}>
             <p style={{color:'#357049'}}>{companyContinent}</p>
         </div>
@@ -524,7 +524,7 @@ function GlobalNetworkForm({ onCancel, onSuccess }) {
                         <option value="">{placeholder}</option>
                         {options.map((option, index) => (
                             <option 
-                                key={typeof option === 'object' ? option.id : `${name}-${index}`} 
+                                key={typeof option === 'object' ? option.id : option.id} 
                                 value={typeof option === 'object' ? option.id : option}
                             >
                                 {typeof option === 'object' ? option.name : option}

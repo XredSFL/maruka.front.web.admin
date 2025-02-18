@@ -55,7 +55,7 @@ function AddDataModal({ onClose, onSave }) {
           <div className="flex flex-col items-center self-center pb-8 w-full max-md:max-w-full">
             <div className="flex overflow-hidden flex-col pt-6 w-full text-3xl font-bold tracking-tight bg-white text-neutral-950 max-md:max-w-full">
               <div className="flex flex-wrap gap-5 justify-between mx-6 w-full max-w-[624px] max-md:mr-2.5 max-md:max-w-full">
-                <h1 id="modalTitle">Add Group Company</h1>
+                <h1 id="modalTitle">Add Administrator</h1>
                 <button type="button" onClick={onClose} aria-label="Close modal" className="cursor-pointer">
                   <img
                     loading="lazy"
