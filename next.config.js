@@ -42,7 +42,7 @@ const nextConfig = {
   },
   // Add this section for the port configuration
   serverRuntimeConfig: {
-    PORT: process.env.PORT || 3200
+    PORT: process.env.PORT || 3000
   },
 };
 

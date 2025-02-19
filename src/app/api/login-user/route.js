@@ -48,20 +48,21 @@ export async function POST(req) {
           id: user.id,
           email: user.email,
           name: user.name, // Tambahkan nama jika tersedia
-          role: user.role, // Tambahkan role jika tersedia
+          // role: user.role, // Tambahkan role jika tersedia
+          token: token,
           // Tambahkan field lain yang diperlukan, tapi jangan sertakan password
         }
       }, 
       { status: 200 }
     );
 
-    // Set token sebagai httpOnly cookie
-    response.cookies.set('token', token, { 
-      httpOnly: true, 
-      secure: process.env.NODE_ENV !== 'development', 
-      sameSite: 'strict',
-      maxAge: 86400 // 1 hari dalam detik
-    });
+    // // Set token sebagai httpOnly cookie
+    // response.cookies.set('token', token, { 
+    //   httpOnly: true, 
+    //   secure: process.env.NODE_ENV !== 'development', 
+    //   sameSite: 'strict',
+    //   maxAge: 86400 // 1 hari dalam detik
+    // });
 
     console.log('Login successful, returning response');
     return response;
