@@ -26,6 +26,9 @@ importers:
       jose:
         specifier: ^5.9.6
         version: 5.9.6
+      js-cookie:
+        specifier: ^3.0.5
+        version: 3.0.5
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -968,6 +971,10 @@ packages:
 
   jose@5.9.6:
     resolution: {integrity: sha512-AMlnetc9+CV9asI19zHmrgS/WYsWUwCn2R7RzlbJWD7F9eWYUTGyBmU9o6PxngtLGOiDGPRu+Uc4fhKzbpteZQ==}
+
+  js-cookie@3.0.5:
+    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
+    engines: {node: '>=14'}
 
   js-md4@0.3.2:
     resolution: {integrity: sha512-/GDnfQYsltsjRswQhN9fhv3EMw2sCpUdrdxyWDOUK7eyD++r3gRhzgiQgc/x4MAv2i1iuQ4lxO5mvqM3vj4bwA==}
@@ -2783,6 +2790,8 @@ snapshots:
   jlick@0.0.4: {}
 
   jose@5.9.6: {}
+
+  js-cookie@3.0.5: {}
 
   js-md4@0.3.2: {}
 

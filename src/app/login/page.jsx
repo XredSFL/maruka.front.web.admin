@@ -1,5 +1,6 @@
 'use client'
 import * as React from "react";
+import Cookies from 'js-cookie';
 import Image from "next/image";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
