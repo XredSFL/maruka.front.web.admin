@@ -37,27 +37,35 @@ function Login() {
   const [error, setError] = useState('');
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    
     try {
-      const response = await fetch('/api/login-user', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          email: form.email.value,
+          password: form.password.value,
+        }),
       });
-
+      
+      const data = await response.json();
+      
       if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('token', data.token);
-        router.push('/dashboard'); // Redirect to dashboard or home page
+        // Set the token as a cookie
+        Cookies.set('token', data.token, { expires: 7 }); // expires in 7 days
+        
+        // Redirect to dashboard
+        router.push('/dashboard');
       } else {
-        const errorData = await response.json();
-        setError(errorData.message);
+        console.error('Login failed:', data.error);
+        // Handle login error (e.g., show error message to user)
       }
     } catch (error) {
-      setError('An error occurred. Please try again.');
+      console.error('Login error:', error);
+      // Handle fetch error
     }
   };
 
