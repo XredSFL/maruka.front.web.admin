@@ -31,7 +31,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      DB_HOST: ${DB_HOST}
+      DB_HOST: db
       DB_USER: ${MYSQL_USER}
       DB_PASSWORD: ${MYSQL_PASSWORD}
       DB_NAME: ${MYSQL_DATABASE}
