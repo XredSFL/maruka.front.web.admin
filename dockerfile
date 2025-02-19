@@ -2,14 +2,17 @@ FROM node:18
 
 WORKDIR /app
 
-COPY package*.json ./
+# Copy package.json and package-lock.json (if you have one)
+COPY package.json package-lock.json* ./
 
-RUN npm install
+# Install dependencies
+RUN npm cli
 
+# Copy the rest of your code
 COPY . .
 
+# Build the application
 RUN npm run build
 
-EXPOSE 3200
-
+# Start the application
 CMD ["npm", "start"]

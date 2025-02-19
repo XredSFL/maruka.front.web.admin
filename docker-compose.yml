@@ -37,6 +37,7 @@ services:
       DB_NAME: ${MYSQL_DATABASE}
     networks:
       - backend
+    
 
 networks:
   backend:

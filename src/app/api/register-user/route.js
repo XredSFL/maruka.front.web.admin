@@ -7,13 +7,6 @@ export async function POST(req) {
   try {
     const { email, password } = await req.json();
 
-    console.log('Database connection config:', {
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      database: process.env.DB_NAME,
-      // Don't log the password
-    });
-
     // Validasi input
     if (!email || !password) {
       return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
