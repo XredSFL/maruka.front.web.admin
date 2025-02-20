@@ -5,6 +5,7 @@ import { verifyToken } from '@/lib/auth';
 export async function middleware(request) {
   const isLoginPage = request.nextUrl.pathname === '/login';
   const isRegisterPage = request.nextUrl.pathname === '/register';
+  const isDashboardPage = request.nextUrl.pathname.startsWith('/dashboard');
   const isPublicAsset = request.nextUrl.pathname.startsWith('/public/') || 
                         request.nextUrl.pathname.startsWith('/_next/') ||
                         request.nextUrl.pathname.startsWith('/uploads') ||
@@ -24,8 +25,13 @@ export async function middleware(request) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  if (isLoggedIn) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+  // Redirect to dashboard if accessing a not-found page (404)
+  if (isLoggedIn && !isDashboardPage) {
+    // Check if the page exists
+    const response = await fetch(request.url);
+    if (response.status === 404) {
+      return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
   }
 
   return NextResponse.next();
