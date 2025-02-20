@@ -7,6 +7,7 @@ export async function middleware(request) {
   const isRegisterPage = request.nextUrl.pathname === '/register';
   const isPublicAsset = request.nextUrl.pathname.startsWith('/public/') || 
                         request.nextUrl.pathname.startsWith('/_next/') ||
+                        request.nextUrl.pathname.startsWith('/uploads') ||
                         request.nextUrl.pathname.startsWith('/img/');
   
   if (isPublicAsset) {
