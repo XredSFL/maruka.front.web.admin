@@ -24,7 +24,7 @@ export async function middleware(request) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  if (isLoggedIn && (isLoginPage || isRegisterPage)) {
+  if (isLoggedIn) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
