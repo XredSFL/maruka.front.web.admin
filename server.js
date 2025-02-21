@@ -1,33 +1,24 @@
-const { createServer } = require('http')
-const { parse } = require('url')
-const next = require('next')
-const fs = require('fs')
-const path = require('path')
+const express = require('express');
+const next = require('next');
+const path = require('path');
 
-const dev = process.env.NODE_ENV !== 'production'
-const app = next({ dev })
-const handle = app.getRequestHandler()
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-  createServer((req, res) => {
-    const parsedUrl = parse(req.url, true)
-    const { pathname } = parsedUrl
+  const server = express();
 
-    if (pathname.startsWith('/uploads/')) {
-      const filePath = path.join(__dirname, 'public', pathname)
-      fs.readFile(filePath, (err, data) => {
-        if (err) {
-          res.statusCode = 404
-          res.end('File not found')
-        } else {
-          res.setHeader('Content-Type', 'application/pdf')
-          res.end(data)
-        }
-      })
-    } else {
-      handle(req, res, parsedUrl)
-    }
-  }).listen(3000, (err) => {
-    if (err) throw err
-  })
-})
+  // Serve static files from the 'public' directory
+  server.use(express.static(path.join(__dirname, 'public')));
+
+  server.all('*', (req, res) => {
+    return handle(req, res);
+  });
+
+  const port = process.env.PORT || 3000;
+  server.listen(port, (err) => {
+    if (err) throw err;
+    console.log(`> Ready on http://localhost:${port}`);
+  });
+});

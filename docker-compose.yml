@@ -38,6 +38,8 @@ services:
       DB_NAME: ${MYSQL_DATABASE}
     networks:
       - backend
+    volumes:
+      - ./public:/app/public
     
 networks:
   backend:
