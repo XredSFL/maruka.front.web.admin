@@ -28,18 +28,18 @@ export function CompanyProfileMainSection() {
       if (response.ok) {
         const data = await response.json();
         setFormData(prevData => ({
-          companyName: data.company_name || "",
-          presidentDirector: data.president_director || "",
+          company_name: data.company_name || "",
+          president_director: data.president_director || "",
           phone: data.phone || "",
           address: data.address || "",
           establishment: data.establishment ? new Date(data.establishment).toISOString().split('T')[0] : "",
-          paidCapital: data.paid_capital ? data.paid_capital.toString() : "",
-          fiscalYear: data.fiscal_year || "",
-          stockListings: data.stock_listings || "",
-          businessBases: data.business_bases || "",
-          mainBankers: data.main_bankers || "",
+          paid_capital: data.paid_capital ? data.paid_capital.toString() : "",
+          fiscal_year: data.fiscal_year || "",
+          stock_listings: data.stock_listings || "",
+          business_bases: data.business_bases || "",
+          main_bankers: data.main_bankers || "",
           employees: data.employees ? data.employees.toString() : "",
-          linkMap: data.link_map || "",
+          link_map: data.link_map || "",
           video: null // Reset video to null as we don't fetch it from the database
         }));
       } else {
@@ -121,7 +121,7 @@ export function CompanyProfileMainSection() {
     { id: 'businessBases', label: 'Business Bases (*)', type: 'text' },
     { id: 'mainBankers', label: 'Main Bankers (*)', type: 'text' },
     { id: 'employees', label: 'Number of Employees (*)', type: 'number' },
-    { id: 'linkMap', label: 'Link Map (*)', type: 'url' }
+    { id: 'linkMap', label: 'Link Map (*)', type: 'text' }
   ];
 
   const renderFormField = ({ id, label, type }) => {
@@ -209,7 +209,7 @@ export function CompanyProfileMainSection() {
                     />
                   </label>
                   <div className="mt-1 leading-none max-md:max-w-full">
-                    Size Maximum: 5 GB. Format file: Mp4
+                    Size Maximum: 50 MB. Format file: Mp4
                   </div>
                 </div>
               </div>

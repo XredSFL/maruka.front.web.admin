@@ -9,7 +9,7 @@ export async function POST(req) {
     const formData = await req.formData();
     
     // Handle file upload
-    let videoPath = null;
+    let video_path = null;
     const video = formData.get('video');
     if (video) {
       const bytes = await video.arrayBuffer();
@@ -25,7 +25,7 @@ export async function POST(req) {
 
       // Write the file
       await writeFile(filePath, buffer);
-      videoPath = `/uploads/company-profile/video/${filename}`;
+      video_path = `/uploads/company-profile/video/${filename}`;
     }
 
     // Prepare data for upsert
@@ -53,7 +53,7 @@ export async function POST(req) {
     let id;
     if (result) {
       // If a new video was uploaded, remove the old one
-      if (videoPath && result.video_path) {
+      if (video_path && result.video_path) {
         const oldVideoPath = path.join(process.cwd(), 'public', result.video_path);
         if (fs.existsSync(oldVideoPath)) {
           await unlink(oldVideoPath);
@@ -65,14 +65,14 @@ export async function POST(req) {
         .where('id', result.id)
         .update({
           ...companyData,
-          video_path: videoPath || result.video_path // Keep old path if no new video
+          video_path: video_path || result.video_path // Keep old path if no new video
         });
       id = result.id;
     } else {
       // Insert new row if table is empty
       [id] = await knex('company_profiles').insert({
         ...companyData,
-        video_path: videoPath,
+        video_path: video_path,
         created_at: knex.fn.now(),
       });
     }
