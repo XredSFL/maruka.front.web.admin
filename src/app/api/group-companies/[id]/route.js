@@ -63,3 +63,41 @@ export async function PUT(request, { params }) {
     return NextResponse.json({ error: 'Failed to update group company' }, { status: 500 });
   }
 }
+
+export async function DELETE(request, { params }) {
+  const { id } = params;
+
+  try {
+    // Start a transaction
+    await knex.transaction(async (trx) => {
+      // Get the company details, especially the photo
+      const company = await trx('group_companies').where({ id }).first();
+
+      if (!company) {
+        throw new Error('Group company not found');
+      }
+
+      // If there's a photo, delete it from the file system
+      if (company.photo) {
+        const photoPath = path.join(process.cwd(), 'public', company.photo);
+        try {
+          await unlink(photoPath);
+        } catch (unlinkError) {
+          console.error('Error deleting photo file:', unlinkError);
+          // Continue with deletion even if file removal fails
+        }
+      }
+
+      // Delete the company from the database
+      await trx('group_companies').where({ id }).del();
+    });
+
+    return NextResponse.json({ message: 'Group company deleted successfully' }, { status: 200 });
+  } catch (error) {
+    console.error('Error deleting group company:', error);
+    if (error.message === 'Group company not found') {
+      return NextResponse.json({ error: 'Group company not found' }, { status: 404 });
+    }
+    return NextResponse.json({ error: 'Failed to delete group company' }, { status: 500 });
+  }
+}
