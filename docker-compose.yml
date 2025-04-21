@@ -40,6 +40,7 @@ services:
       - backend
     volumes:
       - ./public:/app/public
+      - ./src:/app/src
     
 networks:
   backend:
