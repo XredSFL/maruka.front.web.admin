@@ -146,7 +146,7 @@ function AddProductModal({ isOpen, onClose, onSave, categories, editingProduct }
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
               placeholder="Enter Product Name"
-              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
@@ -159,8 +159,8 @@ function AddProductModal({ isOpen, onClose, onSave, categories, editingProduct }
               className="mt-1 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md py-8 cursor-pointer"
               onClick={() => fileInputRef.current.click()}
             >
-              <p className="text-sm text-gray-500">Drop or Browse file</p>
-              <p className="text-xs text-gray-400">
+              <p className="text-sm">Drop or Browse file</p>
+              <p className="text-xs">
                 Size Maximum: 5 GB. Format file: MP4, PNG, or JPG.
               </p>
             </div>
